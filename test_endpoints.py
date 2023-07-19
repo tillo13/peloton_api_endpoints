@@ -14,6 +14,7 @@ base_url = 'https://api.onepeloton.com'
 login_path = '/auth/login'
 
 VERBOSE_MODE = False  # Change this to False if you don't want verbose output
+SLEEP_TIMER = 0.3 # this means each API call will be made after a delay of 0.5 seconds being kind to the undocumented API friends...
 
 def create_session(username, password):
     login_url = base_url + login_path
@@ -33,7 +34,7 @@ def count_endpoints(endpoints):
     return count
 
 def load_endpoints():
-    with open('endpoints.json') as f:
+    with open('base_endpoints.json') as f:
         endpoints = json.load(f)
         print(f"Loaded {count_endpoints(endpoints)} endpoints.")
         return endpoints
@@ -159,27 +160,23 @@ def test_endpoints(session, user_id, ready_to_test, parameters_needed):
                         print(f'Response Content: \n{json.dumps(response.json(), indent=4)}\n')
                     except json.JSONDecodeError:
                         print(f'Response Content: {response.content}\n')
+
+                print(f"{Fore.LIGHTBLACK_EX}API-cognizant pause for {SLEEP_TIMER} seconds.{Fore.RESET}")
+                time.sleep(SLEEP_TIMER)
     
     # combine endpoints waiting for parameters and tested endpoint results
     endpoints = {**test_result_data, **parameters_needed}
-    with open('endpoints.json', 'w') as f:
+        
+    with open('queried_endpoints_temp.json', 'w') as f:
         json.dump(endpoints, f, indent=4)
+
+    # if everything is okay until now, rename the temp file to queried_endpoints.json
+    os.rename('queried_endpoints_temp.json', 'queried_endpoints.json')
 
     print("\nTesting completed!")
     print(f"Successful calls: {Fore.GREEN}{success_count}{Fore.RESET}")
     print(f"Failed calls: {Fore.RED}{fail_count}{Fore.RESET}")
     print(f"Incomplete calls: {Fore.YELLOW}{incomplete_count}{Fore.RESET}")
-
-    # include the check here as well right before writing the file
-    print(f"Going to save {count_endpoints(endpoints)} endpoints. If no errors were shown above, the file will be overwritten.")
-
-    # write to a temporary file first
-    with open('endpoints_temp.json', 'w') as f:
-        json.dump(endpoints, f, indent=4)
-
-    # if everything is okay until now, replace the original file
-    os.rename('endpoints_temp.json', 'endpoints.json')
-
 
 def main():
     session, user_id = create_session(username, password)
