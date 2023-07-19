@@ -1,0 +1,316 @@
+{
+    "authentication": {
+        "POST": [
+            {
+                "endpoint": "/auth/login",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 401,
+                    "error_code": 3010,
+                    "message": "Login failed"
+                },
+                "test_date": 1689781900.4043992
+            }
+        ],
+        "GET": [
+            {
+                "endpoint": "/auth/check_session",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781901.271671
+            }
+        ]
+    },
+    "users": {
+        "GET": [
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/image_upload_url",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 403,
+                    "error_code": 3030,
+                    "message": "No permission to access this resource."
+                },
+                "test_date": 1689781901.410877
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/followers",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 404,
+                    "error_code": 110,
+                    "message": "class: <class 'data.models.user.User'>; key: (('pk', '5ef06c6abf4b41719e668702c4876582'),)"
+                },
+                "test_date": 1689781901.567443
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/following",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 404,
+                    "error_code": 110,
+                    "message": "class: <class 'data.models.user.User'>; key: (('pk', '5ef06c6abf4b41719e668702c4876582'),)"
+                },
+                "test_date": 1689781901.7114549
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/facebook_friends",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 403,
+                    "error_code": 3030,
+                    "message": "No permission to access this resource."
+                },
+                "test_date": 1689781901.8595479
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/calendar",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 404,
+                    "error_code": 110,
+                    "message": "User not found"
+                },
+                "test_date": 1689781902.04966
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/workouts",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 404,
+                    "error_code": 110,
+                    "message": "class: <class 'data.models.user.User'>; key: (('pk', '5ef06c6abf4b41719e668702c4876582'),)"
+                },
+                "test_date": 1689781902.195127
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/challenges/current",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 403,
+                    "error_code": 3030,
+                    "message": "No permission to access this resource."
+                },
+                "test_date": 1689781902.3314712
+            },
+            {
+                "endpoint": "/api/me",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781902.774522
+            },
+            {
+                "endpoint": "/api/user/search",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 400,
+                    "error_code": 2120,
+                    "message": "user_query is required"
+                },
+                "test_date": 1689781902.9299579
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/challenges/upcoming",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 403,
+                    "error_code": 3030,
+                    "message": "No permission to access this resource."
+                },
+                "test_date": 1689781903.061337
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/achievements",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 404,
+                    "error_code": 110,
+                    "message": "class: <class 'data.models.user.User'>; key: (('pk', '5ef06c6abf4b41719e668702c4876582'),)"
+                },
+                "test_date": 1689781903.2017128
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/overview",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 400,
+                    "error_code": 2120,
+                    "message": "Peloton-Platform header is required"
+                },
+                "test_date": 1689781903.3262851
+            },
+            {
+                "endpoint": "/api/v2/user/subscriptions",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781903.6207218
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/settings",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 404,
+                    "error_code": 110,
+                    "message": "class: <class 'data.models.user.User'>; key: (('pk', '5ef06c6abf4b41719e668702c4876582'),)"
+                },
+                "test_date": 1689781903.7568178
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/referral_history",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 403,
+                    "error_code": 3030,
+                    "message": "No permission to access this resource."
+                },
+                "test_date": 1689781904.0339541
+            }
+        ],
+        "POST": [
+            {
+                "endpoint": "/api/user/change_relationship",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 404,
+                    "error_code": 110,
+                    "message": "class: <class 'data.models.user.User'>; key: None"
+                },
+                "test_date": 1689781904.3422542
+            }
+        ]
+    },
+    "instructors": {
+        "GET": [
+            {
+                "endpoint": "/api/instructor",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781904.57394
+            }
+        ]
+    },
+    "reference": {
+        "GET": [
+            {
+                "endpoint": "/api/browse_categories",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 400,
+                    "error_code": 2120,
+                    "message": "library_type is required"
+                },
+                "test_date": 1689781904.726113
+            },
+            {
+                "endpoint": "/api/instructor",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781905.007787
+            }
+        ]
+    },
+    "favorites": {
+        "POST": [
+            {
+                "endpoint": "/api/favorites/create",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 400,
+                    "error_code": 2110,
+                    "message": "Must provide parameter 'ride_id'."
+                },
+                "test_date": 1689781905.143318
+            }
+        ]
+    },
+    "reservations": {
+        "POST": [
+            {
+                "endpoint": "/api/reservation",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 400,
+                    "error_code": 2110,
+                    "message": "Must provide parameter 'peloton_id'."
+                },
+                "test_date": 1689781905.272723
+            }
+        ]
+    },
+    "challenge": {
+        "GET": [
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/challenges/current",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 403,
+                    "error_code": 3030,
+                    "message": "No permission to access this resource."
+                },
+                "test_date": 1689781905.4166741
+            },
+            {
+                "endpoint": "/api/user/5ef06c6abf4b41719e668702c4876582/challenges/upcoming",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 403,
+                    "error_code": 3030,
+                    "message": "No permission to access this resource."
+                },
+                "test_date": 1689781905.560666
+            }
+        ]
+    },
+    "corporate": {
+        "GET": [
+            {
+                "endpoint": "/api/v2/user/subscriptions",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781905.9182131
+            },
+            {
+                "endpoint": "/api/promotions/digital",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 400,
+                    "error_code": 2110,
+                    "message": "Must provide device_type."
+                },
+                "test_date": 1689781906.0553339
+            }
+        ]
+    },
+    "ride": {
+        "GET": [
+            {
+                "endpoint": "/api/ride/metadata_mappings",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781906.4220412
+            },
+            {
+                "endpoint": "/api/ride/filters",
+                "test_result": "Failed",
+                "failure_details": {
+                    "status": 400,
+                    "error_code": 2120,
+                    "message": "Peloton-Platform header is required"
+                },
+                "test_date": 1689781906.555674
+            },
+            {
+                "endpoint": "/api/v2/ride/archived",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781907.11159
+            },
+            {
+                "endpoint": "/api/v3/ride/live",
+                "test_result": "Successful",
+                "failure_details": null,
+                "test_date": 1689781909.016024
+            }
+        ]
+    }
+}
