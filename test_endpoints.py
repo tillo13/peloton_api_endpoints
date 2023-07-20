@@ -74,7 +74,7 @@ def load_endpoints():
         print(f"Loaded {count_endpoints(endpoints)} endpoints.")
         return endpoints
 
-def preprocess_endpoints(endpoints, params):
+def preprocess_endpoints(session, endpoints, params):
     ready_to_test = {}
     parameters_filled = {}
 
@@ -100,6 +100,13 @@ def preprocess_endpoints(endpoints, params):
                         if param_value:
                             endpoint = endpoint.replace("{" + param + "}", param_value)
                             parameters_filled.setdefault(category, {}).setdefault(request_type, []).append(endpoint)
+                        elif 'instructorId' in dynamic_parameters and 'instructorId' not in params:
+                            instructor_list_response = session.get(base_url + "/api/instructor")
+                            instructors = handle_response(instructor_list_response, "Failed to fetch instructors")
+                            if isinstance(instructors, dict) and 'data' in instructors and len(instructors['data']) > 0:
+                                 first_instructor_id = instructors['data'][0]['id']
+                                 endpoint = endpoint.replace("{instructorId}", first_instructor_id)
+                                 parameters_filled.setdefault(category, {}).setdefault(request_type, []).append(endpoint)
                         else:
                             ready_to_test.setdefault(category, {}).setdefault(request_type, []).append(endpoint)
 
@@ -108,6 +115,8 @@ def preprocess_endpoints(endpoints, params):
 
 def test_endpoints(session, user_id, ready_to_test, parameters_filled):
     print("\nStarting endpoint testing...")
+    #set this to keep from duplicating
+    tested_endpoints = set()
     success_count = 0
     fail_count = 0
     incomplete_count = 0
@@ -122,6 +131,11 @@ def test_endpoints(session, user_id, ready_to_test, parameters_filled):
             print(f"\nCategory: {category}")
             for request_type, endpoint_list in request_types.items():
                 for endpoint in endpoint_list:
+                     # If endpoint is already tested, skip it
+                    if endpoint in tested_endpoints:
+                        continue
+                    else:
+                        tested_endpoints.add(endpoint)
                     # Replace userID placeholder if exists
                     endpoint = endpoint.replace("{userId}", user_id)
                     missing_parameters = regex.findall(endpoint)  # Check if there are still some missing parameters
@@ -238,7 +252,7 @@ def main():
     params = {"userId": user_id, "workoutId": workoutId, "rideId": rideId}
     endpoints = load_endpoints()
     initial_count = count_endpoints(endpoints)
-    ready_to_test, parameters_filled = preprocess_endpoints(endpoints, params)
+    ready_to_test, parameters_filled = preprocess_endpoints(session, endpoints, params)
 
     global test_result_data
     test_result_data = {}

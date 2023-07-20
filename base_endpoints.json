@@ -1,7 +1,6 @@
 {
     "authentication": {
-        "POST": [{ "endpoint": "/auth/login" }],
-        "GET": [{ "endpoint": "/auth/check_session" }]
+        "POST": [{ "endpoint": "/auth/login" }]
     },
     "users": {
         "GET": [
@@ -11,14 +10,9 @@
             { "endpoint": "/api/user/{userId}/following" },
             { "endpoint": "/api/user/{userId}/facebook_friends" },
             { "endpoint": "/api/user/{userId}/calendar" },
-            { "endpoint": "/api/user/{userNameOrId}" },
             { "endpoint": "/api/user/{userId}/workouts" },
             { "endpoint": "/api/me" },
             { "endpoint": "/api/user/search" },
-            { "endpoint": "/api/user/{userId}/challenges/current" },
-            { "endpoint": "/api/user/{userId}/challenges/upcoming" },
-            { "endpoint": "/api/user/{userId}/challenges/{challengeId}" },
-            { "endpoint": "/api/user/{userId}/challenges/{challengeId}/friends" },
             { "endpoint": "/api/user/{userId}/achievements" },
             { "endpoint": "/api/user/{userId}/overview" },
             { "endpoint": "/api/v2/user/subscriptions" },
@@ -26,9 +20,7 @@
             { "endpoint": "/api/user/{userId}/referral_history" }
         ],
         "POST": [
-            { "endpoint": "/api/user/change_relationship" },
-            { "endpoint": "/api/user/{userId}/challenges/{challengeId}/join" },
-            { "endpoint": "/api/user/{userId}/challenges/{challengeId}/leave" }
+            { "endpoint": "/api/user/change_relationship" }
         ]
     },
     "public": {
@@ -64,7 +56,7 @@
     "favorites": {
         "POST": [{ "endpoint": "/api/favorites/create" }]
     },
-    "challenge": {
+    "challenges": {
         "GET": [
             { "endpoint": "/api/user/{userId}/challenges/current" },
             { "endpoint": "/api/user/{userId}/challenges/upcoming" },
