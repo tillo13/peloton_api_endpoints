@@ -5,6 +5,7 @@ import os
 from colorama import Fore
 import time
 import re
+import sys
 
 
 load_dotenv()
@@ -17,7 +18,7 @@ workouts_path = '/api/user/{userId}/workouts'
 workout_path = '/api/workout/{workoutId}'
 ride_path = '/api/ride/{rideId}/details'
 
-VERBOSE_MODE = False  # Change this to False if you don't want verbose output
+VERBOSE_MODE = True  # Change this to False if you don't want verbose output
 SLEEP_TIMER = 0.3  # this means each API call will be made after a delay of 0.5 seconds being kind to the undocumented API friends...
 
 
@@ -32,33 +33,34 @@ def create_session(username, password):
     return session, response.json()['user_id']
 
 
-def handle_response(response, error_message):
+def handle_response(response, error_message, endpoint=None):
     if response.status_code != 200:
-        print(f"{error_message}. Response: {response.json()}")
+        error_details = error_message + ". Response: " + str(response.json())
+        if endpoint and VERBOSE_MODE:
+            print(f"Endpoint: {endpoint}\n{error_details}")
         return None
     data = response.json()
     if VERBOSE_MODE:
         print(json.dumps(data, indent=4))
     return data
 
-
 def get_user_workouts(session, user_id):
     url = base_url + workouts_path.replace("{userId}", user_id)
     response = session.get(url)
-    return handle_response(response, "Failed to fetch user workouts")
-
+    endpoint = url if response.status_code != 200 else None
+    return handle_response(response, "Failed to fetch user workouts", endpoint)  
 
 def get_workout_details(session, workout_id):
     url = base_url + workout_path.replace("{workoutId}", workout_id)
     response = session.get(url)
-    return handle_response(response, "Failed to fetch workout details")
-
+    endpoint = url if response.status_code != 200 else None
+    return handle_response(response, "Failed to fetch workout details", endpoint)
 
 def get_ride_details(session, ride_id):
     url = base_url + ride_path.replace("{rideId}", ride_id)
     response = session.get(url)
-    return handle_response(response, "Failed to fetch ride details")
-
+    endpoint = url if response.status_code != 200 else None
+    return handle_response(response, "Failed to fetch ride details", endpoint)
 
 def count_endpoints(endpoints):
     count = 0
@@ -233,11 +235,17 @@ def test_endpoints(session, user_id, ready_to_test, parameters_filled):
     print(f"Failed calls: {Fore.RED}{fail_count}{Fore.RESET}")
     print(f"Incomplete calls: {Fore.YELLOW}{incomplete_count}{Fore.RESET}")
 
-
 def main():
+    original_output = sys.stdout
+    if VERBOSE_MODE:
+        print(f"VEBOSE_MODE=True, saving all outputs to verbose_mode.txt")
+        print(f"Please hold...")
+        log_file = open("verbose_mode.txt", "w")
+        sys.stdout = log_file
+
     session, user_id = create_session(username, password)
     if session is None:
-        print("Login unsuccessful. Exiting...")
+        print("Login unsuccessful. Exiting...", flush=True)
         return
 
     workoutId = None
@@ -262,10 +270,14 @@ def main():
     final_count = count_endpoints(endpoints)
 
     if initial_count != final_count:
-        print(f"WARNING: Initial count of endpoints ({initial_count}) does not match final count ({final_count}).")
+        print(f"WARNING: Initial count of endpoints ({initial_count}) does not match final count ({final_count}).", flush=True)
     else:
-        print(f"Endpoint counts matched. Initial and final count is {initial_count}.")
+        print(f"Endpoint counts matched. Initial and final count is {initial_count}.", flush=True)
 
+    # Revert the output back to terminal and close the file if VERBOSE_MODE was enabled
+    if VERBOSE_MODE:
+        sys.stdout = original_output
+        log_file.close()
 
 if __name__ == "__main__":
     main()
